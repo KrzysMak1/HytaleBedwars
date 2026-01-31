@@ -1,0 +1,35 @@
+upgrades:
+  SHARPENED_SWORDS:
+    maxLevel: 1
+    cost:
+      currency: DIAMOND
+      amount: 4
+  REINFORCED_ARMOR:
+    maxLevel: 4
+    costs:
+      1: { currency: DIAMOND, amount: 2 }
+      2: { currency: DIAMOND, amount: 4 }
+      3: { currency: DIAMOND, amount: 8 }
+      4: { currency: DIAMOND, amount: 16 }
+  HASTE:
+    maxLevel: 2
+    costs:
+      1: { currency: DIAMOND, amount: 2 }
+      2: { currency: DIAMOND, amount: 4 }
+  HEAL_POOL:
+    maxLevel: 1
+    cost:
+      currency: DIAMOND
+      amount: 1
+  TRAP:
+    maxLevel: 3
+    cost:
+      currency: DIAMOND
+      amount: 1
+  FORGE:
+    maxLevel: 4
+    costs:
+      1: { currency: DIAMOND, amount: 2 }
+      2: { currency: DIAMOND, amount: 4 }
+      3: { currency: DIAMOND, amount: 8 }
+      4: { currency: DIAMOND, amount: 16 }

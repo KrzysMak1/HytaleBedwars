@@ -1,0 +1,16 @@
+categories:
+  BLOCKS:
+    - id: wool
+      name: "Wool"
+      currency: IRON
+      amount: 4
+      tier: 1
+  WEAPONS:
+    - id: sword_stone
+      name: "Stone Sword"
+      currency: IRON
+      amount: 10
+      tier: 1
+  ARMOR: []
+  TOOLS: []
+  UTILITIES: []

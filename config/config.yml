@@ -1,0 +1,39 @@
+configVersion: 2
+minPlayers: 2
+startingCountdownSeconds: 10
+respawnDelaySeconds: 5
+spawnProtectionSeconds: 3
+assistWindowSeconds: 5
+enableSpectatorJoin: false
+actionbarEnabled: true
+maxItemsOnGround: 64
+mergeRadius: 2
+cleanupItemsIntervalSeconds: 30
+blockPlacePerSecondLimit: 8
+breakableMapBlocks: []
+bedProtectionEnabled: true
+forgeLevels:
+  1:
+    dropIntervalTicks: 40
+    drops:
+      - IRON
+  2:
+    dropIntervalTicks: 30
+    drops:
+      - IRON
+      - GOLD
+  3:
+    dropIntervalTicks: 20
+    drops:
+      - IRON
+      - GOLD
+  4:
+    dropIntervalTicks: 15
+    drops:
+      - IRON
+      - GOLD
+currencyDropOnDeath:
+  IRON: true
+  GOLD: true
+  DIAMOND: false
+  EMERALD: false

@@ -1,0 +1,19 @@
+prefix: "&7[&bBedWars&7] "
+match:
+  join: "{prefix}&a{player} joined {mode}"
+  leave: "{prefix}&c{player} left"
+  startCountdown: "{prefix}&eMatch starting in {time}s"
+  cancelled: "{prefix}&cMatch cancelled"
+  winner: "{prefix}&6Team {team} wins on {map}!"
+  bedDestroyedGlobal: "{prefix}&c{player} destroyed {team} bed!"
+  bedDestroyedTeam: "{prefix}&cYour bed was destroyed!"
+  finalKill: "{prefix}&cFinal kill! {player}"
+respawn:
+  pending: "{prefix}&eRespawning in {time}s"
+  blocked: "{prefix}&cYou can no longer respawn"
+shop:
+  purchaseSuccess: "{prefix}&aPurchased {item}"
+  purchaseFail: "{prefix}&cNot enough {currency}"
+admin:
+  start: "{prefix}&aStarted match {map} {mode}"
+  stop: "{prefix}&cStopped match {match}"

@@ -1,7 +1,10 @@
 package com.hytale.bedwars.core.stats
 
 class StatsService {
-    fun merge(session: SessionStats, total: PlayerStats) {
+    fun merge(
+        session: SessionStats,
+        total: PlayerStats,
+    ) {
         total.wins += session.stats.wins
         total.losses += session.stats.losses
         total.kills += session.stats.kills

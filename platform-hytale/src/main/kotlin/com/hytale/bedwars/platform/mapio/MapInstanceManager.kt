@@ -13,7 +13,10 @@ class MapInstanceManager(private val mapsRoot: File) {
         }
     }
 
-    fun cloneTemplate(mapId: String, matchId: String): String {
+    fun cloneTemplate(
+        mapId: String,
+        matchId: String,
+    ): String {
         val templateDir = File(mapsRoot, mapId)
         require(templateDir.exists()) { "Map template not found: ${templateDir.path}" }
         val instanceId = "$mapId-$matchId-${System.currentTimeMillis()}"
@@ -36,7 +39,10 @@ class MapInstanceManager(private val mapsRoot: File) {
         instancesDir.listFiles()?.forEach { it.deleteRecursively() }
     }
 
-    private fun copyDirectory(source: File, target: File) {
+    private fun copyDirectory(
+        source: File,
+        target: File,
+    ) {
         if (source.isDirectory) {
             if (!target.exists()) {
                 target.mkdirs()

@@ -5,14 +5,20 @@ data class CurrencyStack(val currency: Currency, var amount: Int)
 class CurrencyInventory(stacks: List<CurrencyStack> = emptyList()) {
     private val stacks: MutableList<CurrencyStack> = stacks.toMutableList()
 
-    fun add(currency: Currency, amount: Int) {
+    fun add(
+        currency: Currency,
+        amount: Int,
+    ) {
         require(amount >= 0) { "Amount must be non-negative" }
         stacks.add(CurrencyStack(currency, amount))
     }
 
     fun total(currency: Currency): Int = stacks.filter { it.currency == currency }.sumOf { it.amount }
 
-    fun removeExact(currency: Currency, amount: Int): Boolean {
+    fun removeExact(
+        currency: Currency,
+        amount: Int,
+    ): Boolean {
         require(amount >= 0) { "Amount must be non-negative" }
         if (total(currency) < amount) {
             return false
@@ -35,4 +41,10 @@ class CurrencyInventory(stacks: List<CurrencyStack> = emptyList()) {
     }
 
     fun snapshot(): List<CurrencyStack> = stacks.map { CurrencyStack(it.currency, it.amount) }
+
+    fun drain(): List<CurrencyStack> {
+        val snapshot = snapshot()
+        stacks.clear()
+        return snapshot
+    }
 }

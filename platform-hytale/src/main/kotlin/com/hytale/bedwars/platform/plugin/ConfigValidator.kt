@@ -8,24 +8,25 @@ class ConfigValidator {
 
     fun validateConfig(configFile: File) {
         val config = yaml.load<Map<String, Any>>(configFile.readText())
-        val requiredKeys = listOf(
-            "configVersion",
-            "minPlayers",
-            "startingCountdownSeconds",
-            "respawnDelaySeconds",
-            "spawnProtectionSeconds",
-            "assistWindowSeconds",
-            "enableSpectatorJoin",
-            "actionbarEnabled",
-            "maxItemsOnGround",
-            "mergeRadius",
-            "cleanupItemsIntervalSeconds",
-            "blockPlacePerSecondLimit",
-            "breakableMapBlocks",
-            "bedProtectionEnabled",
-            "forgeLevels",
-            "currencyDropOnDeath",
-        )
+        val requiredKeys =
+            listOf(
+                "configVersion",
+                "minPlayers",
+                "startingCountdownSeconds",
+                "respawnDelaySeconds",
+                "spawnProtectionSeconds",
+                "assistWindowSeconds",
+                "enableSpectatorJoin",
+                "actionbarEnabled",
+                "maxItemsOnGround",
+                "mergeRadius",
+                "cleanupItemsIntervalSeconds",
+                "blockPlacePerSecondLimit",
+                "breakableMapBlocks",
+                "bedProtectionEnabled",
+                "forgeLevels",
+                "currencyDropOnDeath",
+            )
         requireMissing(config, requiredKeys, "config.yml")
     }
 
@@ -44,7 +45,11 @@ class ConfigValidator {
         require(messages.containsKey("prefix")) { "messages.yml missing prefix" }
     }
 
-    private fun requireMissing(config: Map<String, Any>, keys: List<String>, name: String) {
+    private fun requireMissing(
+        config: Map<String, Any>,
+        keys: List<String>,
+        name: String,
+    ) {
         val missing = keys.filterNot { config.containsKey(it) }
         require(missing.isEmpty()) { "Missing keys in $name: ${missing.joinToString()}" }
     }

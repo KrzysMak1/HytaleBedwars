@@ -21,7 +21,10 @@ class CachedPlayerStatsRepository(
         return cache.computeIfAbsent(playerId) { delegate.load(playerId) }
     }
 
-    override fun save(playerId: UUID, stats: PlayerStats) {
+    override fun save(
+        playerId: UUID,
+        stats: PlayerStats,
+    ) {
         cache[playerId] = stats
         pendingWrites.add(playerId)
     }

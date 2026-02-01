@@ -8,7 +8,10 @@ import java.util.concurrent.TimeUnit
 class GeneratorRuntime {
     private val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
-    fun start(generator: Generator, dropAction: (Generator) -> Unit) {
+    fun start(
+        generator: Generator,
+        dropAction: (Generator) -> Unit,
+    ) {
         val intervalMillis = (generator.dropIntervalTicks.coerceAtLeast(1) * 50).toLong()
         scheduler.scheduleAtFixedRate({
             dropAction(generator)

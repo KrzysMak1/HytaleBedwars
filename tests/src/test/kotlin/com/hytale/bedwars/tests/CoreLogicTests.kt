@@ -40,17 +40,18 @@ class CoreLogicTests {
         val playerId = UUID.randomUUID()
         teamA.playerIds.add(playerId)
         val sessions = mutableMapOf(playerId to PlayerSession(playerId))
-        val match = Match(
-            matchId = "match-1",
-            mode = MatchMode.SOLO,
-            mapTemplateId = "map-1",
-            mapInstanceId = "inst-1",
-            state = MatchState.INGAME,
-            teams = mutableListOf(teamA, teamB),
-            players = sessions,
-            placedBlocksTracker = PlacedBlocksTracker(),
-            generators = mutableListOf(),
-        )
+        val match =
+            Match(
+                matchId = "match-1",
+                mode = MatchMode.SOLO,
+                mapTemplateId = "map-1",
+                mapInstanceId = "inst-1",
+                state = MatchState.INGAME,
+                teams = mutableListOf(teamA, teamB),
+                players = sessions,
+                placedBlocksTracker = PlacedBlocksTracker(),
+                generators = mutableListOf(),
+            )
 
         val winner = match.determineWinner()
         assertNotNull(winner)
@@ -93,13 +94,14 @@ class CoreLogicTests {
 
     @Test
     fun economyChargeRemovesFromMultipleStacks() {
-        val inventory = CurrencyInventory(
-            listOf(
-                CurrencyStack(Currency.IRON, 3),
-                CurrencyStack(Currency.IRON, 2),
-                CurrencyStack(Currency.GOLD, 5),
-            ),
-        )
+        val inventory =
+            CurrencyInventory(
+                listOf(
+                    CurrencyStack(Currency.IRON, 3),
+                    CurrencyStack(Currency.IRON, 2),
+                    CurrencyStack(Currency.GOLD, 5),
+                ),
+            )
         val economyService = EconomyService()
 
         assertTrue(economyService.chargeInventory(inventory, Price(Currency.IRON, 5)))
@@ -162,17 +164,18 @@ class CoreLogicTests {
         val playerId = UUID.randomUUID()
         teamA.playerIds.add(playerId)
         val sessions = mutableMapOf(playerId to PlayerSession(playerId))
-        val match = Match(
-            matchId = "match-2",
-            mode = MatchMode.SOLO,
-            mapTemplateId = "map-1",
-            mapInstanceId = "inst-2",
-            state = MatchState.INGAME,
-            teams = mutableListOf(teamA, teamB),
-            players = sessions,
-            placedBlocksTracker = PlacedBlocksTracker(),
-            generators = mutableListOf(),
-        )
+        val match =
+            Match(
+                matchId = "match-2",
+                mode = MatchMode.SOLO,
+                mapTemplateId = "map-1",
+                mapInstanceId = "inst-2",
+                state = MatchState.INGAME,
+                teams = mutableListOf(teamA, teamB),
+                players = sessions,
+                placedBlocksTracker = PlacedBlocksTracker(),
+                generators = mutableListOf(),
+            )
 
         assertEquals("A", match.determineWinner()?.id)
     }
@@ -185,17 +188,18 @@ class CoreLogicTests {
         val playerId = UUID.randomUUID()
         teamA.playerIds.add(playerId)
         val sessions = mutableMapOf(playerId to PlayerSession(playerId))
-        val match = Match(
-            matchId = "match-3",
-            mode = MatchMode.SOLO,
-            mapTemplateId = "map-1",
-            mapInstanceId = "inst-3",
-            state = MatchState.INGAME,
-            teams = mutableListOf(teamA, teamB),
-            players = sessions,
-            placedBlocksTracker = PlacedBlocksTracker(),
-            generators = mutableListOf(),
-        )
+        val match =
+            Match(
+                matchId = "match-3",
+                mode = MatchMode.SOLO,
+                mapTemplateId = "map-1",
+                mapInstanceId = "inst-3",
+                state = MatchState.INGAME,
+                teams = mutableListOf(teamA, teamB),
+                players = sessions,
+                placedBlocksTracker = PlacedBlocksTracker(),
+                generators = mutableListOf(),
+            )
 
         assertEquals("A", match.determineWinner()?.id)
     }

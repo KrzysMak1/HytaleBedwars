@@ -10,7 +10,10 @@ import java.util.concurrent.TimeUnit
 class ScoreboardRenderer(private val platformBridge: PlatformBridge) {
     private val scheduler: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
 
-    fun start(playerId: UUID, provider: () -> ScoreboardModel) {
+    fun start(
+        playerId: UUID,
+        provider: () -> ScoreboardModel,
+    ) {
         scheduler.scheduleAtFixedRate({
             val model = provider()
             val lines = mutableListOf<String>()

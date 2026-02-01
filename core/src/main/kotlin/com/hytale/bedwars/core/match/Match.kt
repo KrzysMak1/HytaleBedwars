@@ -19,6 +19,7 @@ class Match(
     val placedBlocksTracker: PlacedBlocksTracker,
     val generators: MutableList<Generator>,
     val scheduledTasks: ScheduledTaskRegistry = ScheduledTaskRegistry(),
+    var startTimeMillis: Long = 0,
 ) {
     fun activeTeams(): List<Team> = teams.filter { it.state == TeamState.ACTIVE }
 

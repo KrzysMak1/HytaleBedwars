@@ -9,7 +9,10 @@ class SqlitePlayerStatsRepository(dbPath: String) : PlayerStatsRepository {
 
     override fun load(playerId: java.util.UUID) = cached.load(playerId)
 
-    override fun save(playerId: java.util.UUID, stats: com.hytale.bedwars.core.stats.PlayerStats) {
+    override fun save(
+        playerId: java.util.UUID,
+        stats: com.hytale.bedwars.core.stats.PlayerStats,
+    ) {
         cached.save(playerId, stats)
     }
 

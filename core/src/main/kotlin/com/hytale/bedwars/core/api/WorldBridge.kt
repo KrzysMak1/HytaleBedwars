@@ -1,23 +1,22 @@
-package com.hytale.bedwars.platform.world
+package com.hytale.bedwars.core.api
 
-import com.hytale.bedwars.core.api.WorldBridge
 import com.hytale.bedwars.core.map.Location
 import java.util.UUID
 
-interface WorldAdapter : WorldBridge {
-    override fun teleport(
+interface WorldBridge {
+    fun teleport(
         playerId: UUID,
         location: Location,
     )
 
-    override fun dropItem(
+    fun dropItem(
         location: Location,
         itemId: String,
         amount: Int,
         mergeRadius: Int,
     )
 
-    override fun setSpectator(
+    fun setSpectator(
         playerId: UUID,
         enabled: Boolean,
     )

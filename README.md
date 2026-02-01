@@ -42,8 +42,26 @@ enableSpectatorJoin: false
 actionbarEnabled: true
 maxItemsOnGround: 64
 mergeRadius: 2
+cleanupItemsIntervalSeconds: 30
 blockPlacePerSecondLimit: 8
+breakableMapBlocks:
+  - { x: 0, y: 64, z: 0 }
 bedProtectionEnabled: true
+forgeLevels:
+  1:
+    dropIntervalTicks: 40
+    drops:
+      - IRON
+  2:
+    dropIntervalTicks: 30
+    drops:
+      - IRON
+      - GOLD
+currencyDropOnDeath:
+  IRON: true
+  GOLD: true
+  DIAMOND: false
+  EMERALD: false
 ```
 
 ### map.yml
@@ -70,6 +88,9 @@ generators:
   - type: IRON
     location: { x: 0, y: 64, z: 0 }
     teamColor: RED
+  - type: DIAMOND
+    location: { x: 25, y: 64, z: 25 }
+    teamColor: null
 voidY: 20
 buildRegion:
   min: { x: -100, y: 0, z: -100 }
@@ -86,6 +107,12 @@ categories:
       currency: IRON
       amount: 4
       tier: 1
+  WEAPONS:
+    - id: sword_stone
+      name: "Stone Sword"
+      currency: IRON
+      amount: 10
+      tier: 1
 ```
 
 ### upgrades.yml
@@ -97,4 +124,35 @@ upgrades:
     cost:
       currency: DIAMOND
       amount: 4
+  REINFORCED_ARMOR:
+    maxLevel: 4
+    costs:
+      1: { currency: DIAMOND, amount: 2 }
+      2: { currency: DIAMOND, amount: 4 }
+      3: { currency: DIAMOND, amount: 8 }
+      4: { currency: DIAMOND, amount: 16 }
+```
+
+### messages.yml
+
+```yaml
+prefix: "&7[&bBedWars&7] "
+match:
+  join: "{prefix}&a{player} joined {mode}"
+  leave: "{prefix}&c{player} left"
+  startCountdown: "{prefix}&eMatch starting in {time}s"
+  cancelled: "{prefix}&cMatch cancelled"
+  winner: "{prefix}&6Team {team} wins on {map}!"
+  bedDestroyedGlobal: "{prefix}&c{player} destroyed {team} bed!"
+  bedDestroyedTeam: "{prefix}&cYour bed was destroyed!"
+  finalKill: "{prefix}&cFinal kill! {player}"
+respawn:
+  pending: "{prefix}&eRespawning in {time}s"
+  blocked: "{prefix}&cYou can no longer respawn"
+shop:
+  purchaseSuccess: "{prefix}&aPurchased {item}"
+  purchaseFail: "{prefix}&cNot enough {currency}"
+admin:
+  start: "{prefix}&aStarted match {map} {mode}"
+  stop: "{prefix}&cStopped match {match}"
 ```

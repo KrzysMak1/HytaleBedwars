@@ -4,5 +4,5 @@ enum class Currency {
     IRON,
     GOLD,
     DIAMOND,
-    EMERALD
+    EMERALD,
 }

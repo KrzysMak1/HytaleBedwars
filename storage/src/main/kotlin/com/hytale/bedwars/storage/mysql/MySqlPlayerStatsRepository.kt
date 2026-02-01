@@ -10,13 +10,17 @@ class MySqlPlayerStatsRepository(
     user: String,
     password: String,
 ) : PlayerStatsRepository {
-    private val cached = CachedPlayerStatsRepository(
-        JdbcPlayerStatsRepository("jdbc:mysql://$host/$database", user, password),
-    )
+    private val cached =
+        CachedPlayerStatsRepository(
+            JdbcPlayerStatsRepository("jdbc:mysql://$host/$database", user, password),
+        )
 
     override fun load(playerId: java.util.UUID) = cached.load(playerId)
 
-    override fun save(playerId: java.util.UUID, stats: com.hytale.bedwars.core.stats.PlayerStats) {
+    override fun save(
+        playerId: java.util.UUID,
+        stats: com.hytale.bedwars.core.stats.PlayerStats,
+    ) {
         cached.save(playerId, stats)
     }
 

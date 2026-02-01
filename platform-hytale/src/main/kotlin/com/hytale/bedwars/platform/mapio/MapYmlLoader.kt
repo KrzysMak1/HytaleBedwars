@@ -18,29 +18,32 @@ class MapYmlLoader(private val mapsRoot: File) {
         val yaml = Yaml()
         val data = yaml.load<Map<String, Any>>(mapFile.readText())
 
-        val teams = (data["teams"] as? List<*>)?.mapNotNull { it as? Map<*, *> }
-            ?: error("Map is missing teams")
+        val teams =
+            (data["teams"] as? List<*>)?.mapNotNull { it as? Map<*, *> }
+                ?: error("Map is missing teams")
 
-        val teamModels = teams.map { team ->
-            MapTeamTemplate(
-                color = team["color"].toString(),
-                name = team["name"].toString(),
-                spawn = readLocation(team["spawn"]),
-                bed = readLocation(team["bed"]),
-                bedRegion = readRegion(team["bedRegion"]),
-                baseRegion = requireNotNull(readRegion(team["baseRegion"])) { "baseRegion missing" },
-                shopNpc = readLocation(team["shopNpc"]),
-                upgradeNpc = readLocation(team["upgradeNpc"]),
-            )
-        }
+        val teamModels =
+            teams.map { team ->
+                MapTeamTemplate(
+                    color = team["color"].toString(),
+                    name = team["name"].toString(),
+                    spawn = readLocation(team["spawn"]),
+                    bed = readLocation(team["bed"]),
+                    bedRegion = readRegion(team["bedRegion"]),
+                    baseRegion = requireNotNull(readRegion(team["baseRegion"])) { "baseRegion missing" },
+                    shopNpc = readLocation(team["shopNpc"]),
+                    upgradeNpc = readLocation(team["upgradeNpc"]),
+                )
+            }
 
-        val generators = (data["generators"] as? List<*>)?.mapNotNull { it as? Map<*, *> }.orEmpty().map { gen ->
-            MapGenerator(
-                type = Currency.valueOf(gen["type"].toString()),
-                location = readLocation(gen["location"]),
-                teamColor = gen["teamColor"]?.toString(),
-            )
-        }
+        val generators =
+            (data["generators"] as? List<*>)?.mapNotNull { it as? Map<*, *> }.orEmpty().map { gen ->
+                MapGenerator(
+                    type = Currency.valueOf(gen["type"].toString()),
+                    location = readLocation(gen["location"]),
+                    teamColor = gen["teamColor"]?.toString(),
+                )
+            }
 
         return MapTemplate(
             id = data["id"].toString(),

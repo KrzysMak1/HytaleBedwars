@@ -7,5 +7,5 @@ enum class MatchState {
     TELEPORTING,
     INGAME,
     ENDING,
-    DESTROYING
+    DESTROYING,
 }

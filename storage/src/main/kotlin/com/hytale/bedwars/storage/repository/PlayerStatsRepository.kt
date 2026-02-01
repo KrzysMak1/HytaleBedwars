@@ -5,5 +5,9 @@ import java.util.UUID
 
 interface PlayerStatsRepository {
     fun load(playerId: UUID): PlayerStats
-    fun save(playerId: UUID, stats: PlayerStats)
+
+    fun save(
+        playerId: UUID,
+        stats: PlayerStats,
+    )
 }

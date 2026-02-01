@@ -5,7 +5,11 @@ import com.hytale.bedwars.platform.plugin.MatchOrchestrator
 import java.util.UUID
 
 class BedWarsCommandHandler(private val orchestrator: MatchOrchestrator) {
-    fun handle(command: String, args: List<String>, senderId: UUID) {
+    fun handle(
+        command: String,
+        args: List<String>,
+        senderId: UUID,
+    ) {
         if (command != "/bw") {
             return
         }

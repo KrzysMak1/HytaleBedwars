@@ -21,10 +21,11 @@ class ShopConfigLoader {
                     id = item["id"].toString(),
                     name = item["name"].toString(),
                     category = category,
-                    price = Price(
-                        currency = Currency.valueOf(item["currency"].toString()),
-                        amount = item["amount"].toString().toInt(),
-                    ),
+                    price =
+                        Price(
+                            currency = Currency.valueOf(item["currency"].toString()),
+                            amount = item["amount"].toString().toInt(),
+                        ),
                     tier = item["tier"]?.toString()?.toInt() ?: 1,
                 )
             }

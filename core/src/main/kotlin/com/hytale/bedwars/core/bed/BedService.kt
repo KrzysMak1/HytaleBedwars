@@ -5,13 +5,20 @@ import com.hytale.bedwars.core.player.PlayerState
 import com.hytale.bedwars.core.team.Team
 
 class BedService {
-    fun destroyBed(team: Team, players: Collection<PlayerSession>): Boolean {
+    fun destroyBed(
+        team: Team,
+        players: Collection<PlayerSession>,
+    ): Boolean {
         if (team.bedState == BedState.DESTROYED) {
             return false
         }
         team.bedState = BedState.DESTROYED
         players.filter { it.teamId == team.id && it.state == PlayerState.RESPAWNING }
-            .forEach { it.pendingRespawn = false }
+            .forEach {
+                it.pendingRespawn = false
+                it.respawnTask?.cancel()
+                it.respawnTask = null
+            }
         return true
     }
 }

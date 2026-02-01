@@ -6,7 +6,7 @@ enum class UpgradeType {
     HASTE,
     HEAL_POOL,
     TRAP,
-    FORGE
+    FORGE,
 }
 
 data class TeamUpgrade(val type: UpgradeType, var level: Int = 0, val maxLevel: Int = 1)

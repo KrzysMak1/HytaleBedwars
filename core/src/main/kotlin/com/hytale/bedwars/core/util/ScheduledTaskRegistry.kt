@@ -16,3 +16,16 @@ class ScheduledTaskRegistry {
 interface CancelableTask {
     fun cancel()
 }
+
+interface TaskScheduler {
+    fun schedule(
+        delayMillis: Long,
+        action: () -> Unit,
+    ): CancelableTask
+
+    fun scheduleAtFixedRate(
+        initialDelayMillis: Long,
+        periodMillis: Long,
+        action: () -> Unit,
+    ): CancelableTask
+}

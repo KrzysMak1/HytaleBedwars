@@ -3,7 +3,10 @@ package com.hytale.bedwars.core.block
 import com.hytale.bedwars.core.map.Region
 
 object RegionBounds {
-    fun contains(region: Region, position: BlockPosition): Boolean {
+    fun contains(
+        region: Region,
+        position: BlockPosition,
+    ): Boolean {
         val minX = minOf(region.min.x, region.max.x)
         val maxX = maxOf(region.min.x, region.max.x)
         val minY = minOf(region.min.y, region.max.y)

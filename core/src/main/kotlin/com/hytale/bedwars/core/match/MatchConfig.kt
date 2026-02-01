@@ -15,6 +15,7 @@ data class MatchConfig(
     val maxItemsOnGround: Int,
     val mergeRadius: Int,
     val blockPlacePerSecondLimit: Int,
+    val breakableMapBlocks: Set<com.hytale.bedwars.core.block.BlockPosition>,
     val bedProtectionEnabled: Boolean,
     val currencyDropOnDeath: Map<Currency, Boolean>,
 )

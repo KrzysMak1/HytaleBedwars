@@ -1,22 +1,22 @@
 package com.hytale.bedwars.platform.match
 
 import com.hytale.bedwars.core.api.PlatformBridge
-import com.hytale.bedwars.core.bed.BedService
 import com.hytale.bedwars.core.block.BlockPosition
-import com.hytale.bedwars.core.block.BlockRules
-import com.hytale.bedwars.core.block.PlacedBlocksTracker
 import com.hytale.bedwars.core.combat.KillAttributionService
 import com.hytale.bedwars.core.map.MapTemplate
 import com.hytale.bedwars.core.match.Match
+import com.hytale.bedwars.core.match.MatchConfig
+import com.hytale.bedwars.core.match.MatchEngine
 import com.hytale.bedwars.core.player.PlayerSession
-import com.hytale.bedwars.core.player.PlayerState
-import com.hytale.bedwars.core.player.RespawnService
 import com.hytale.bedwars.core.shop.ShopItem
 import com.hytale.bedwars.core.team.Team
-import com.hytale.bedwars.core.trap.TrapService
+import com.hytale.bedwars.core.ui.ScoreboardProvider
 import com.hytale.bedwars.core.upgrade.TeamUpgrade
+import com.hytale.bedwars.core.util.TaskScheduler
+import com.hytale.bedwars.platform.adapter.HytaleItemGrantor
 import com.hytale.bedwars.platform.gui.ShopMenu
 import com.hytale.bedwars.platform.gui.UpgradeMenu
+import com.hytale.bedwars.platform.ui.ScoreboardRenderer
 import com.hytale.bedwars.platform.world.WorldAdapter
 import java.util.UUID
 
@@ -24,40 +24,57 @@ class MatchRuntime(
     private val platformBridge: PlatformBridge,
     private val match: Match,
     private val map: MapTemplate,
-    private val tracker: PlacedBlocksTracker,
     private val worldAdapter: WorldAdapter,
     private val shopMenu: ShopMenu,
     private val upgradeMenu: UpgradeMenu,
     private val shopItems: List<ShopItem>,
     private val teamUpgrades: Map<String, List<TeamUpgrade>>,
-    private val bedService: BedService = BedService(),
-    private val respawnService: RespawnService = RespawnService(),
+    private val matchConfig: MatchConfig,
+    private val taskScheduler: TaskScheduler,
     private val killAttributionService: KillAttributionService,
-    private val trapService: TrapService = TrapService(),
 ) {
-    private val rules = BlockRules(tracker, breakableMapBlocks = emptySet())
+    private val scoreboardRenderer = ScoreboardRenderer(platformBridge)
+    private val scoreboardProvider = ScoreboardProvider()
+    private val engine =
+        MatchEngine(
+            match = match,
+            map = map,
+            config = matchConfig,
+            platformBridge = platformBridge,
+            worldBridge = worldAdapter,
+            taskScheduler = taskScheduler,
+            itemGrantor = HytaleItemGrantor(platformBridge, worldAdapter),
+            killAttributionService = killAttributionService,
+        )
 
-    fun handleBlockPlace(playerId: UUID, position: BlockPosition): Boolean {
-        val protectedRegions = map.teams.mapNotNull { it.bedRegion }
-        val allowed = rules.canPlace(position, map.buildRegion, protectedRegions)
-        if (allowed) {
-            tracker.track(position)
+    fun start(nowMillis: Long) {
+        engine.startMatch(nowMillis)
+        match.players.keys.forEach { playerId ->
+            scoreboardRenderer.start(playerId) {
+                scoreboardProvider.build(match, map, platformBridge.currentTimeMillis())
+            }
         }
-        return allowed
     }
 
-    fun handleBlockBreak(playerId: UUID, position: BlockPosition): Boolean {
-        val allowed = rules.canBreak(position)
-        if (allowed) {
-            tracker.untrack(position)
-        }
-        return allowed
+    fun handleBlockPlace(
+        playerId: UUID,
+        position: BlockPosition,
+    ): Boolean {
+        return engine.handleBlockPlace(playerId, position)
     }
 
-    fun handleBedBreak(breakerId: UUID, team: Team) {
-        if (bedService.destroyBed(team, match.players.values)) {
-            platformBridge.sendMessage(breakerId, "[${match.matchId}] Bed destroyed for ${team.name}")
-        }
+    fun handleBlockBreak(
+        playerId: UUID,
+        position: BlockPosition,
+    ): Boolean {
+        return engine.handleBlockBreak(playerId, position)
+    }
+
+    fun handleBedBreak(
+        breakerId: UUID,
+        team: Team,
+    ) {
+        engine.handleBedBreak(breakerId, team.color)
     }
 
     fun teleportTeamsToSpawns() {
@@ -69,40 +86,50 @@ class MatchRuntime(
         }
     }
 
-    fun handleDamage(victim: PlayerSession, attackerId: UUID?, nowMillis: Long) {
-        victim.markDamage(attackerId, nowMillis)
+    fun handleDamage(
+        victim: PlayerSession,
+        attackerId: UUID?,
+        nowMillis: Long,
+    ) {
+        engine.handleDamage(victim, attackerId, nowMillis)
     }
 
-    fun handleDeath(victim: PlayerSession, nowMillis: Long) {
-        val killer = killAttributionService.resolveKiller(victim, nowMillis)
-        val team = match.teams.firstOrNull { it.id == victim.teamId }
-        if (team == null) {
-            return
-        }
-        if (respawnService.canRespawn(team.bedState)) {
-            victim.state = PlayerState.RESPAWNING
-            victim.pendingRespawn = true
-        } else {
-            victim.state = PlayerState.SPECTATOR
-            worldAdapter.setSpectator(victim.playerId, true)
-            platformBridge.sendMessage(victim.playerId, "[${match.matchId}] Final death")
-        }
-        if (killer != null) {
-            platformBridge.sendMessage(killer, "[${match.matchId}] You killed ${victim.playerId}")
-        }
+    fun handleDeath(
+        victim: PlayerSession,
+        nowMillis: Long,
+    ) {
+        engine.handleDeath(victim, nowMillis)
     }
 
-    fun handleTrapTrigger(intruderId: UUID, team: Team) {
-        val effect = trapService.trigger(team.trapQueue, intruderId.toString()) ?: return
-        platformBridge.showTitle(intruderId, effect.alarmMessage, effect.debuff)
+    fun handleMove(
+        playerId: UUID,
+        location: com.hytale.bedwars.core.map.Location,
+    ) {
+        engine.handleMove(playerId, location)
     }
 
     fun openShop(playerId: UUID) {
         shopMenu.open(playerId, shopItems)
     }
 
-    fun openUpgrades(playerId: UUID, team: Team) {
+    fun purchaseShopItem(
+        playerId: UUID,
+        item: ShopItem,
+    ): Boolean {
+        return engine.openShop(playerId, item)
+    }
+
+    fun openUpgrades(
+        playerId: UUID,
+        team: Team,
+    ) {
         val upgrades = teamUpgrades[team.id].orEmpty()
         upgradeMenu.open(playerId, upgrades)
     }
+
+    fun canInteract(playerId: UUID): Boolean = engine.canInteract(playerId)
+
+    fun canPickup(playerId: UUID): Boolean = engine.canPickup(playerId)
+
+    fun canCollide(playerId: UUID): Boolean = engine.canCollide(playerId)
 }

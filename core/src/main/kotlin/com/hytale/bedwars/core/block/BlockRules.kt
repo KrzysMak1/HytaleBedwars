@@ -6,7 +6,11 @@ class BlockRules(
     private val tracker: PlacedBlocksTracker,
     private val breakableMapBlocks: Set<BlockPosition>,
 ) {
-    fun canPlace(position: BlockPosition, buildRegion: Region, protectedRegions: List<Region>): Boolean {
+    fun canPlace(
+        position: BlockPosition,
+        buildRegion: Region,
+        protectedRegions: List<Region>,
+    ): Boolean {
         if (!RegionBounds.contains(buildRegion, position)) {
             return false
         }

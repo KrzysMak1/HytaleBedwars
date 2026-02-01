@@ -7,7 +7,7 @@ enum class ShopCategory {
     WEAPONS,
     ARMOR,
     TOOLS,
-    UTILITIES
+    UTILITIES,
 }
 
 data class ShopItem(

@@ -39,16 +39,38 @@ class JdbcPlayerStatsRepository(
         }
     }
 
-    override fun save(playerId: UUID, stats: PlayerStats) {
-        val statement = if (jdbcUrl.startsWith("jdbc:mysql")) {
-            "INSERT INTO bw_player_stats (playerId,wins,losses,kills,deaths,bedsBroken,finalKills,gamesPlayed,winstreak) VALUES (?,?,?,?,?,?,?,?,?) " +
-                "ON DUPLICATE KEY UPDATE wins=VALUES(wins), losses=VALUES(losses), kills=VALUES(kills), deaths=VALUES(deaths), " +
-                "bedsBroken=VALUES(bedsBroken), finalKills=VALUES(finalKills), gamesPlayed=VALUES(gamesPlayed), winstreak=VALUES(winstreak)"
-        } else {
-            "INSERT INTO bw_player_stats (playerId,wins,losses,kills,deaths,bedsBroken,finalKills,gamesPlayed,winstreak) VALUES (?,?,?,?,?,?,?,?,?) " +
-                "ON CONFLICT(playerId) DO UPDATE SET wins=excluded.wins, losses=excluded.losses, kills=excluded.kills, deaths=excluded.deaths, " +
-                "bedsBroken=excluded.bedsBroken, finalKills=excluded.finalKills, gamesPlayed=excluded.gamesPlayed, winstreak=excluded.winstreak"
-        }
+    override fun save(
+        playerId: UUID,
+        stats: PlayerStats,
+    ) {
+        val statement =
+            if (jdbcUrl.startsWith("jdbc:mysql")) {
+                "INSERT INTO bw_player_stats " +
+                    "(playerId,wins,losses,kills,deaths,bedsBroken,finalKills,gamesPlayed,winstreak) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?) " +
+                    "ON DUPLICATE KEY UPDATE " +
+                    "wins=VALUES(wins), " +
+                    "losses=VALUES(losses), " +
+                    "kills=VALUES(kills), " +
+                    "deaths=VALUES(deaths), " +
+                    "bedsBroken=VALUES(bedsBroken), " +
+                    "finalKills=VALUES(finalKills), " +
+                    "gamesPlayed=VALUES(gamesPlayed), " +
+                    "winstreak=VALUES(winstreak)"
+            } else {
+                "INSERT INTO bw_player_stats " +
+                    "(playerId,wins,losses,kills,deaths,bedsBroken,finalKills,gamesPlayed,winstreak) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?) " +
+                    "ON CONFLICT(playerId) DO UPDATE SET " +
+                    "wins=excluded.wins, " +
+                    "losses=excluded.losses, " +
+                    "kills=excluded.kills, " +
+                    "deaths=excluded.deaths, " +
+                    "bedsBroken=excluded.bedsBroken, " +
+                    "finalKills=excluded.finalKills, " +
+                    "gamesPlayed=excluded.gamesPlayed, " +
+                    "winstreak=excluded.winstreak"
+            }
         connection().use { conn ->
             conn.prepareStatement(statement).use { stmt ->
                 stmt.setString(1, playerId.toString())

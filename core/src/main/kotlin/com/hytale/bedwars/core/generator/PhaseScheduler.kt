@@ -16,7 +16,10 @@ data class PhaseEntry(
 )
 
 class PhaseScheduler(private val entries: List<PhaseEntry>) {
-    fun phaseFor(type: Currency, elapsedSeconds: Int): PhaseEntry? {
+    fun phaseFor(
+        type: Currency,
+        elapsedSeconds: Int,
+    ): PhaseEntry? {
         return entries
             .filter { it.type == type && elapsedSeconds >= it.startSeconds }
             .maxByOrNull { it.startSeconds }

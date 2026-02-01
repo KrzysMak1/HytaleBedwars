@@ -106,6 +106,7 @@ categories:
       name: "Wool"
       currency: IRON
       amount: 4
+      quantity: 16
       tier: 1
   WEAPONS:
     - id: sword_stone

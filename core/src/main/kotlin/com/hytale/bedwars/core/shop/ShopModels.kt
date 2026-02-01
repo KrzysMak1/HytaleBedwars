@@ -15,5 +15,6 @@ data class ShopItem(
     val name: String,
     val category: ShopCategory,
     val price: Price,
+    val quantity: Int = 1,
     val tier: Int = 1,
 )

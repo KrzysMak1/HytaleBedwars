@@ -18,10 +18,11 @@ class ShopTransactionService(private val economyService: EconomyService) {
         if (!economyService.chargeInventory(inventory, price)) {
             return false
         }
-        val hasSpace = itemGrantor.hasSpace(playerId, item.id, 1)
-        val given = if (hasSpace) itemGrantor.giveItem(playerId, item.id, 1) else false
+        val quantity = item.quantity.coerceAtLeast(1)
+        val hasSpace = itemGrantor.hasSpace(playerId, item.id, quantity)
+        val given = if (hasSpace) itemGrantor.giveItem(playerId, item.id, quantity) else false
         if (!given) {
-            itemGrantor.dropItem(playerId, item.id, 1, dropLocation)
+            itemGrantor.dropItem(playerId, item.id, quantity, dropLocation)
         }
         return true
     }

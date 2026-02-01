@@ -26,6 +26,7 @@ class ShopConfigLoader {
                             currency = Currency.valueOf(item["currency"].toString()),
                             amount = item["amount"].toString().toInt(),
                         ),
+                    quantity = item["quantity"]?.toString()?.toInt() ?: 1,
                     tier = item["tier"]?.toString()?.toInt() ?: 1,
                 )
             }

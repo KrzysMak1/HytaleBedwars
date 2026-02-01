@@ -2,6 +2,11 @@
 
 Production-grade BedWars foundation for Hytale.
 
+## Reference alignment
+
+For feature parity checks against Hypixel Bed Wars rules and tuning, see
+`docs/bedwars-reference.md`.
+
 ## Quickstart
 
 1. Place maps in `maps/example_map` (see `maps/example_map/map.yml`).

@@ -4,13 +4,213 @@ categories:
       name: "Wool"
       currency: IRON
       amount: 4
+      quantity: 16
+      tier: 1
+    - id: hardened_clay
+      name: "Hardened Clay"
+      currency: IRON
+      amount: 12
+      quantity: 16
+      tier: 1
+    - id: wood_planks
+      name: "Wood Planks"
+      currency: GOLD
+      amount: 4
+      quantity: 16
+      tier: 1
+    - id: end_stone
+      name: "End Stone"
+      currency: IRON
+      amount: 24
+      quantity: 12
+      tier: 1
+    - id: glass
+      name: "Blast-Proof Glass"
+      currency: IRON
+      amount: 12
+      quantity: 4
+      tier: 1
+    - id: ladder
+      name: "Ladder"
+      currency: IRON
+      amount: 4
+      quantity: 16
+      tier: 1
+    - id: obsidian
+      name: "Obsidian"
+      currency: EMERALD
+      amount: 4
+      quantity: 4
       tier: 1
   WEAPONS:
     - id: sword_stone
       name: "Stone Sword"
       currency: IRON
       amount: 10
+      quantity: 1
       tier: 1
-  ARMOR: []
-  TOOLS: []
-  UTILITIES: []
+    - id: sword_iron
+      name: "Iron Sword"
+      currency: GOLD
+      amount: 7
+      quantity: 1
+      tier: 1
+    - id: sword_diamond
+      name: "Diamond Sword"
+      currency: EMERALD
+      amount: 4
+      quantity: 1
+      tier: 1
+    - id: knockback_stick
+      name: "Knockback Stick"
+      currency: GOLD
+      amount: 5
+      quantity: 1
+      tier: 1
+    - id: bow
+      name: "Bow"
+      currency: GOLD
+      amount: 12
+      quantity: 1
+      tier: 1
+    - id: arrow
+      name: "Arrow"
+      currency: GOLD
+      amount: 2
+      quantity: 6
+      tier: 1
+  ARMOR:
+    - id: armor_chainmail
+      name: "Chainmail Armor"
+      currency: IRON
+      amount: 40
+      quantity: 1
+      tier: 1
+    - id: armor_iron
+      name: "Iron Armor"
+      currency: GOLD
+      amount: 12
+      quantity: 1
+      tier: 1
+    - id: armor_diamond
+      name: "Diamond Armor"
+      currency: EMERALD
+      amount: 6
+      quantity: 1
+      tier: 1
+  TOOLS:
+    - id: shears
+      name: "Shears"
+      currency: IRON
+      amount: 20
+      quantity: 1
+      tier: 1
+    - id: pickaxe_wood
+      name: "Wooden Pickaxe"
+      currency: IRON
+      amount: 10
+      quantity: 1
+      tier: 1
+    - id: pickaxe_iron
+      name: "Iron Pickaxe"
+      currency: IRON
+      amount: 10
+      quantity: 1
+      tier: 2
+    - id: axe_wood
+      name: "Wooden Axe"
+      currency: IRON
+      amount: 10
+      quantity: 1
+      tier: 1
+    - id: axe_iron
+      name: "Iron Axe"
+      currency: IRON
+      amount: 10
+      quantity: 1
+      tier: 2
+  UTILITIES:
+    - id: golden_apple
+      name: "Golden Apple"
+      currency: GOLD
+      amount: 3
+      quantity: 1
+      tier: 1
+    - id: potion_speed
+      name: "Speed Potion (45s)"
+      currency: EMERALD
+      amount: 1
+      quantity: 1
+      tier: 1
+    - id: potion_jump
+      name: "Jump Potion (45s)"
+      currency: EMERALD
+      amount: 1
+      quantity: 1
+      tier: 1
+    - id: potion_invisibility
+      name: "Invisibility Potion (30s)"
+      currency: EMERALD
+      amount: 2
+      quantity: 1
+      tier: 1
+    - id: fireball
+      name: "Fireball"
+      currency: IRON
+      amount: 40
+      quantity: 1
+      tier: 1
+    - id: tnt
+      name: "TNT"
+      currency: GOLD
+      amount: 4
+      quantity: 1
+      tier: 1
+    - id: water_bucket
+      name: "Water Bucket"
+      currency: GOLD
+      amount: 3
+      quantity: 1
+      tier: 1
+    - id: ender_pearl
+      name: "Ender Pearl"
+      currency: EMERALD
+      amount: 4
+      quantity: 1
+      tier: 1
+    - id: bridge_egg
+      name: "Bridge Egg"
+      currency: EMERALD
+      amount: 1
+      quantity: 1
+      tier: 1
+    - id: dream_defender
+      name: "Dream Defender"
+      currency: IRON
+      amount: 120
+      quantity: 1
+      tier: 1
+    - id: bedbug
+      name: "Bed Bug"
+      currency: IRON
+      amount: 40
+      quantity: 1
+      tier: 1
+    - id: pop_up_tower
+      name: "Pop-up Tower"
+      currency: IRON
+      amount: 24
+      quantity: 1
+      tier: 1
+    - id: milk_bucket
+      name: "Milk Bucket"
+      currency: GOLD
+      amount: 4
+      quantity: 1
+      tier: 1
+    - id: sponge
+      name: "Sponge"
+      currency: GOLD
+      amount: 3
+      quantity: 1
+      tier: 1
